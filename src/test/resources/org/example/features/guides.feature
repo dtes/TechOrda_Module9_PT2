@@ -19,5 +19,5 @@ Feature: Guides Page Testing
   Scenario: TC-GUI-011 - Verify Email Link Functionality
     Given I navigate to "https://solutionshub.epam.com/guides"
     When I locate the email link "product_ideas@epam.com"
-    And I click on the email link
+    And I click on the email link "product_ideas@epam.com"
     Then the default email client should open or mailto link should be triggered

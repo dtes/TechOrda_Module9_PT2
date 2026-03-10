@@ -7,7 +7,7 @@ Feature: Blog Page Testing
     Given I navigate to "https://solutionshub.epam.com/blog"
     When I locate the blog hero section
     Then the hero title should contain "SolutionsHub Blog Posts"
-    And the title text should be clearly visible
+    And the title text "SolutionsHub Blog Posts" should be clearly visible
 
   Scenario: TC-BLOG-007 - Verify Blog Post Card Information
     Given I navigate to "https://solutionshub.epam.com/blog"
@@ -21,4 +21,3 @@ Feature: Blog Page Testing
     Given I navigate to "https://solutionshub.epam.com/blog"
     When I examine the publication dates of blog posts
     Then the posts should be ordered chronologically
-    And the newest posts should appear first

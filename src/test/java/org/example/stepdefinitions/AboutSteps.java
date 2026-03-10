@@ -2,6 +2,7 @@ package org.example.stepdefinitions;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.utils.JSUtils;
 import org.example.utils.XPathUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,29 +13,33 @@ import static org.junit.Assert.*;
 public class AboutSteps {
 
     @When("I click on the {string} navigation tab")
-    public void iClickOnNavigationTab(String tabName) {
-        WebElement tab = Hooks.getWait().until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//a[" + XPathUtils.textContainsIgnoreCase(tabName) + "]")
+    public void iClickOnNavigationTab(String tabName) throws InterruptedException{
+        WebElement tab = Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[contains(@class, 'aboutUsMenuLink')]")
         ));
-        tab.click();
+        assertTrue("Navigation tab should be present", tab.isDisplayed());
+        JSUtils.click(tab);
+        Thread.sleep(2000);
     }
 
     @Then("I should be on the {string} page")
-    public void iShouldBeOnPage(String path) {
-        Hooks.getWait().until(ExpectedConditions.urlContains(path));
+    public void iShouldBeOnPage(String path) throws InterruptedException {
+        Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+
         assertTrue("URL should contain " + path, Hooks.getDriver().getCurrentUrl().contains(path));
+        Thread.sleep(1000);
     }
 
     @Then("the {string} tab should be visually highlighted")
     public void theTabShouldBeHighlighted(String tabName) {
         WebElement activeTab = Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//a[contains(@class, 'active') or contains(@class, 'selected') or @aria-current='page']")
+            By.xpath("//a[contains(@class, '__active') and contains(@class, 'aboutUsMenuLink')]")
         ));
         assertNotNull("Active tab should be present", activeTab);
     }
 
     @Then("the page should display about content")
-    public void thePageShouldDisplayAboutContent() {
+    public void thePageShouldDisplayAboutContent() throws InterruptedException {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Page should contain about-related content",
@@ -42,7 +47,7 @@ public class AboutSteps {
     }
 
     @When("I locate the mission section")
-    public void iLocateTheMissionSection() {
+    public void iLocateTheMissionSection() throws InterruptedException {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         try {
             WebElement missionSection = Hooks.getDriver().findElement(
@@ -58,28 +63,28 @@ public class AboutSteps {
     }
 
     @Then("the mission statement should be clearly displayed")
-    public void theMissionStatementShouldBeClearlyDisplayed() {
+    public void theMissionStatementShouldBeClearlyDisplayed() throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Mission statement should be displayed",
                 pageSource.contains("resource") || pageSource.contains("platform") || pageSource.contains("epam"));
     }
 
     @Then("the text should include {string} or {string}")
-    public void theTextShouldIncludeOr(String text1, String text2) {
+    public void theTextShouldIncludeOr(String text1, String text2) throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Text should include '" + text1 + "' or '" + text2 + "'",
                 pageSource.contains(text1.toLowerCase()) || pageSource.contains(text2.toLowerCase()));
     }
 
     @Then("the mission should mention {string}")
-    public void theMissionShouldMention(String keyword) {
+    public void theMissionShouldMention(String keyword) throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Mission should mention: " + keyword,
                 pageSource.contains(keyword.toLowerCase()));
     }
 
     @When("I locate the target audience section")
-    public void iLocateTheTargetAudienceSection() {
+    public void iLocateTheTargetAudienceSection() throws InterruptedException {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         try {
             WebElement audienceSection = Hooks.getDriver().findElement(
@@ -96,7 +101,7 @@ public class AboutSteps {
     }
 
     @Then("I should see {string} or similar audience label")
-    public void iShouldSeeOrSimilarAudienceLabel(String audienceLabel) {
+    public void iShouldSeeOrSimilarAudienceLabel(String audienceLabel) throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Page should contain audience label like '" + audienceLabel + "'",
                 pageSource.contains(audienceLabel.toLowerCase()) ||
@@ -106,7 +111,7 @@ public class AboutSteps {
     }
 
     @Then("the description should mention searching for solutions")
-    public void theDescriptionShouldMentionSearchingForSolutions() {
+    public void theDescriptionShouldMentionSearchingForSolutions() throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Description should mention searching for solutions",
                 (pageSource.contains("search") && pageSource.contains("solution")) ||
@@ -116,7 +121,7 @@ public class AboutSteps {
     }
 
     @Then("the description should mention digital transformation")
-    public void theDescriptionShouldMentionDigitalTransformation() {
+    public void theDescriptionShouldMentionDigitalTransformation() throws InterruptedException {
         String pageSource = Hooks.getDriver().getPageSource().toLowerCase();
         assertTrue("Description should mention digital transformation",
                 (pageSource.contains("digital") && pageSource.contains("transformation")) ||

@@ -2,6 +2,7 @@ package org.example.stepdefinitions;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.utils.XPathUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,8 +37,8 @@ public class GuidesSteps {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         try {
             gettingListedSection = Hooks.getDriver().findElement(
-                    By.xpath("//*[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'getting listed') or " +
-                            "contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'get listed')]")
+                    By.xpath("//*[" + XPathUtils.textContainsIgnoreCase("getting listed") + " or " +
+                            XPathUtils.textContainsIgnoreCase("get listed") + "]")
             );
         } catch (Exception e) {
             gettingListedSection = Hooks.getDriver().findElement(By.tagName("body"));

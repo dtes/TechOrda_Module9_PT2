@@ -42,3 +42,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Authentication cookies (should not be committed)
+src/test/resources/cookies/
+
+# Chrome development profile for reuse mode
+chrome-dev-profile/

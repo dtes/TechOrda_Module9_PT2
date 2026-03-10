@@ -2,6 +2,7 @@ package org.example.stepdefinitions;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.utils.XPathUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +14,7 @@ public class AboutSteps {
     @When("I click on the {string} navigation tab")
     public void iClickOnNavigationTab(String tabName) {
         WebElement tab = Hooks.getWait().until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//a[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" + tabName.toLowerCase() + "')]")
+            By.xpath("//a[" + XPathUtils.textContainsIgnoreCase(tabName) + "]")
         ));
         tab.click();
     }
@@ -45,8 +46,8 @@ public class AboutSteps {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         try {
             WebElement missionSection = Hooks.getDriver().findElement(
-                    By.xpath("//*[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'mission') or " +
-                            "contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'purpose')]")
+                    By.xpath("//*[" + XPathUtils.textContainsIgnoreCase("mission") + " or " +
+                            XPathUtils.textContainsIgnoreCase("purpose") + "]")
             );
             assertNotNull("Mission section should be present", missionSection);
         } catch (Exception e) {
@@ -82,9 +83,9 @@ public class AboutSteps {
         Hooks.getWait().until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
         try {
             WebElement audienceSection = Hooks.getDriver().findElement(
-                    By.xpath("//*[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'benefit') or " +
-                            "contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'audience') or " +
-                            "contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'client')]")
+                    By.xpath("//*[" + XPathUtils.textContainsIgnoreCase("benefit") + " or " +
+                            XPathUtils.textContainsIgnoreCase("audience") + " or " +
+                            XPathUtils.textContainsIgnoreCase("client") + "]")
             );
             assertNotNull("Target audience section should be present", audienceSection);
         } catch (Exception e) {

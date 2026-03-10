@@ -21,7 +21,7 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.15.0'
 
     // Selenium (For Browser Automation)
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.41.0'
 
     // JUnit 4 Assert (for compatibility)
     testImplementation 'junit:junit:4.13.2'
@@ -32,6 +32,14 @@ dependencies {
     // Log4j (For Logging)
     testImplementation 'org.apache.logging.log4j:log4j-core:2.20.0'
     testImplementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+
+    // SLF4J (required by PageUtils logging)
+    testImplementation 'org.slf4j:slf4j-api:2.0.9'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
+
+    // JNA (required by Selenium 4 for native browser interaction)
+    testImplementation 'net.java.dev.jna:jna:5.14.0'
+    testImplementation 'net.java.dev.jna:jna-platform:5.14.0'
 
     // ReportPortal (for integration with ReportPortal)
     testImplementation 'com.epam.reportportal:logger-java-log4j:5.0.2'

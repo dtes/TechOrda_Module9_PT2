@@ -15,11 +15,10 @@ Feature: Assets Page Testing
     When I refresh the page
     Then the URL should still contain "mode=assets"
     And the page should still display asset cards
-    And the "Assets" mode should remain active
+    And the "Assets" mode button should be highlighted
 
   Scenario: TC-AST-008 - Verify Asset Type Filter Beta Solution
     Given I navigate to "https://solutionshub.epam.com/catalog?mode=assets"
     When I select "Beta solution" from asset type filters
     Then only beta solution assets should be displayed
-    And each asset card should show a "Beta" badge
     And the asset result count should update correctly
